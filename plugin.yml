@@ -1,0 +1,9 @@
+name: SuperShop
+version: 1.0.0 BETA
+author: RTGTeam
+description: People has been dreaming for ages, now its a reality!
+main: RTG\SuperShop\Main
+api: [2.0.0, 2.1.0]
+commands:
+  shop:
+   usage: "/shop help"
