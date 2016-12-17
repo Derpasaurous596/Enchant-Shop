@@ -9,7 +9,7 @@
 	*
 */
 
-namespace RTG\SuperShop;
+namespace SFC\SuperShop;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
