@@ -1,9 +1,9 @@
 name: SuperShop
 version: 1.0.0 BETA
-author: RTGTeam
+author: SFCTeam
 description: People has been dreaming for ages, now its a reality!
-main: RTG\SuperShop\Main
+main: SFC\SuperShop\Main
 api: [2.0.0, 2.1.0]
-commands:
+commands: "/enchanter" 
   shop:
-   usage: "/shop help"
+   usage: "/enchanter"
