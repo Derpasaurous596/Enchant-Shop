@@ -1,0 +1,49 @@
+
+PHP:
+<?php
+
+namespace SuperCraftFactions\CustomEnchants;
+
+use pocketmine\plugin\PluginBase;
+
+use pocketmine\event\Listener;
+use pocketmine\event\entity\{EntityArmorChangeEvent, EntityDamageByEntityEvent, EntityDamageEvent};
+use pocketmine\event\player\PlayerDeathEvent;
+
+
+use pocketmine\utils\TextFormat as c;
+
+use pocketmine\Player;
+use pocketmine\Server;
+
+use pocketmine\entity\Effect;
+
+use pocketmine\item\enchantment\Enchantment;
+use pocketmine\item\Item;
+
+class Main extends PluginBase implements Listener{
+
+  public function onEnable(){
+    $this->getServer()->getPluginManager()->registerEvents($this, $this);
+    $this->getServer()->getLogger()->notice(c::AQUA . "CustomEffects " . c::YELLOW . "by " . c::RED . "SuperCraftFactions" . c::YELLOW . " has now been enabled!");
+  }
+    public function onDamage(EntityDamageEvent $e) {
+        if ($e instanceof EntityDamageByEntityEvent) {
+        $damager = $e->getDamager();
+        $p = $e->getEntity();
+        $thing = $damager->getInventory()->getItemInHand();
+        if ($thing->getId() === 276 and $thing->getCustomName() === c::AQUA . "Snake" . c::GRAY . "\n50% Chance to cause poison" . "\n\n") {
+           switch (mt_rand(1,5)) {
+                case 1:
+                    return;
+                case 2:
+                    return;
+                case 3:
+                    return;
+                case 4:
+                    return;
+                case 5:
+                    $p->addEffect(Effect::getEffect(19)->setDuration(13 * 20)->setAmplifier(1));
+        } 
+      }
+}
