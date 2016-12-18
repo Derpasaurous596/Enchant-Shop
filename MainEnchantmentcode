@@ -1,0 +1,77 @@
+
+class CustomEnchantments{
+    protected static $items = [];
+    private $validTags =
+    [
+        'damage',
+        'effectsOnUse'
+    ];
+    private $base;
+    public function __construct(YourPluginBaseClass $base){
+        $this->base = $base;
+        $this->parseItems();
+    }
+ 
+    public static function isCustom(\pocketmine\item\Item $item){
+        return isset(self::$items[spl_object_hash($item)]);
+    }
+ 
+    private function parseItems(){
+        $items = [];
+        $contents = file_get_contents($this->base->getDataFolder() . 'CustomEnchants.dat');
+        $contents = unserialize(gzdecode($contents));
+        foreach($items as $itemName => $data){
+            self::$items[$itemName] = $data;
+        }
+    }
+ 
+    public function checkValidTags(&$tags = []){
+        foreach($this->validTags as $tag){
+            if(empty($tags[$tag])){
+                unset($tags[$tag]);
+            }
+        }
+    }
+ 
+    public function useOn(\pocketmine\Player $p, \pocketmine\item\Item $item){
+        if(self::isCustom($item)){
+            if(!empty(self::$items[spl_objet_hash($items)]['effectsOnUse'])){
+                foreach(self::$items[spl_objet_hash($items)]['effectsOnUse'] as $effect){
+                    $p->addEffect($effect);
+                }
+            }
+            if(!empty($self::$items[spl_objet_hash($items)]['damage'])){
+                $p->setHealth($p->getHealth() - intval(self::$items[spl_objet_hash($items)]['damage']));
+            }
+        }
+    }
+ 
+    public static function save(){
+        file_put_contents($this->base->getDataFolder() . 'CustomEnchants.dat', gzencode(serialize(self::$items)))
+    }
+ 
+                           
+    public static function addItem(\pocketmine\item\Item $item, $tags = []){
+        if(isset(self::$items[spl_object_hash($item)])){
+            checkValidTags($tags);
+            foreach($tags as $tag => $values){
+                self::$items[spl_object_hash($item)][$tag] = $values;
+            }
+            self::save();
+        }else{
+            checkValidTags($tags);
+            self::$items[spl_object_hash($item)] = [];
+            foreach($tags as $tag => $values){
+                self::$items[spl_object_hash($item)][$tag] = $values;
+            }
+            self::save();
+        }
+    }
+ 
+    public static function removeItem(\pocketmine\item\Item $item){
+        if(isset(self::$items[spl_object_hash($item)])){
+            unset(self::$items[spl_object_hash($item)]);
+            self::save();
+        }
+    }
+}
