@@ -1,4 +1,3 @@
-
 class CustomEnchantments{
     protected static $items = [];
     private $validTags =
